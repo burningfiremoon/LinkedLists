@@ -40,6 +40,7 @@ public:
       //
       // IMPLEMENT THIS
       //
+      return false;
    ; }
 
    bool find(T item){ 
@@ -48,6 +49,7 @@ public:
       //
       // IMPLEMENT THIS 
       //
+      return false;
    ; }
 
    bool remove(T item){
@@ -56,20 +58,25 @@ public:
       //
       // IMPLEMENT THIS
       //
+      return true;
    ; }
 
-   T getMin(){// returns the minimum item in the lise
+   T getMin(){ //Done
+      // returns the minimum item in the lise
       // requires: size not 0 
       //
       // IMPLEMENT THIS 
       //
+      return front->next->getMin();
     ; } 
 
-   T getMax(){// returns the maximum item in the list
+   T getMax(){ // Done
+      // returns the maximum item in the list
       // requires: size not 0 
       //
       // IMPLEMENT THIS
       //
+      return back->prev->getMax();
    ;}
 
    void display(){
@@ -77,6 +84,7 @@ public:
       Node * cursor = front-> next ;
       cout << "<" ;
       while( cursor != back ){
+
          cursor -> display() ; 
          cursor = cursor-> next ;
       }
@@ -96,11 +104,15 @@ private:
          data = new T[capacity] ;
          size = 0 ;
       }
-      Node * prev ; // pointer to the next node 
-      Node * next ; // pointer to the previous nodes 
+
+
+      Node * prev ; // pointer to the previous nodes
+      Node * next ; // pointer to the next nodes
       int capacity ; // capacity of this node 
       T * data ; // array of data items in this node 
       int size ; // current number of items in this node 
+
+
       int getCapacity(){// return the capacity of this node 
          return capacity; 
       }
@@ -112,22 +124,41 @@ private:
          return data[0] ; 
       }
       T getMax(){// return the largest item in this node 
-         // requires: this->size not 0 
-         return data[size-1] ; 
+         // requires: this->size not 0
+         return data[size -1]; 
       }
       bool insert(T item){
          // inserts item into this node if it was not already there 
          // returns true if the item was inserted, false otherwise 
-	 //
+	      //
          // IMPLEMENT THIS 
-	 //
+	      //
+         // while ()
+         return true;
       ;}
-      bool find(T item){
+      bool find(T item){ //Done
          // searches for item in this node 
          // returns true if found, false otherwise 
-	 //
+	      //
          // IMPLEMENT THIS
-	 //
+	      //
+         int left = 0;
+         int right = size -1;
+         while(left <= right){
+            int middle = (right - left)/2 + left;
+
+            if (data[middle] == item){
+               return true;
+            }
+
+            if (data[middle] < item){
+               left = middle + 1;
+            } else{
+               right = middle -1;
+            }
+         }
+         // number not present
+         return false;
       ;}
       bool remove(T item){
          // remove item from this node
@@ -135,13 +166,23 @@ private:
 	 //
          // IMLEMENT THIS
 	 //
+      return false;
       ;}
-      void display(){// print the contents of this list 
-	 // 
+      void display(){ // Done
+         // print the contents of this list 
+	      // 
          // IMPLEMENT THIS
-	 //
-	 //
-      ;} 
+	      //
+	      //
+         cout << "< ";
+         for (int i = 0; i<size; i++){
+            cout << data[i];
+            if (i != size-1){
+               cout << ", ";
+            }
+         }
+         cout << " >";
+      ;}
    };
 
    int size ; // current number of items 

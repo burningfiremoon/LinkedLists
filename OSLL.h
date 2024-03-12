@@ -39,13 +39,15 @@ public:
       // insert a new node with item just before cursor
       // unless the node at the cursor has item already
       if( cursor -> data != item ){
-	 // If the item is not here, insert a new node with it
-	 //
-	 // IMPLEMENT THIS
-	 //
+	      // If the item is not here, insert a new node with it
+	      //
+	      // IMPLEMENT THIS
+	      //
+         Node temp = new Node(item, cursor, cursor->prev);
+         temp->prev->next = temp;
          return true ;
       }else{
-	 // The item was already here 
+	      // The item was already here 
          return false ; 
       }
    }
@@ -94,7 +96,7 @@ public:
    }
 
    void display(){
-      // prints out the list contents 
+      // prints out the list contents
       Node * cursor = front-> next ;
       cout << "<" ;
       while( cursor != back ){

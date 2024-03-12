@@ -33,7 +33,7 @@ public:
       // inserts item into the list, if it is not already there
       // returns true if inserted, false if it was already there 
       Node * cursor = front-> next ;
-      while( cursor->data < item && cursor != back ){
+      while(cursor != back && cursor->data < item){
          cursor = cursor-> next ;
       }
       // insert a new node with item just before cursor
@@ -43,8 +43,10 @@ public:
 	      //
 	      // IMPLEMENT THIS
 	      //
-         Node temp = new Node(item, cursor, cursor->prev);
+         Node* temp = new Node(item, cursor->prev, cursor);
          temp->prev->next = temp;
+         temp->next->prev = temp;
+         size++;
          return true ;
       }else{
 	      // The item was already here 
@@ -75,10 +77,13 @@ public:
          // The item is not in the list 
          return false ; 
       }else{
-	 // Delete the node with the item
-	 //
-	 // IMPLEMENT THIS 
-	 //
+         // Delete the node with the item
+         //
+         // IMPLEMENT THIS 
+         //
+         cursor->prev->next = cursor->next;
+         cursor->next->prev = cursor->prev;
+         delete cursor;
          size -- ;
          return true ;
       }

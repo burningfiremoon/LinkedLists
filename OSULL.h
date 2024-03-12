@@ -120,12 +120,21 @@ private:
          return size; 
       }
       T getMin(){// return the smallest item in this node
-         // requires: this->size not 0 
-         return data[0] ; 
+         // requires: this->size not 0
+         if (size != 0){
+            return data[0] ; 
+         } else{
+            return -1;
+         }
+
       }
       T getMax(){// return the largest item in this node 
          // requires: this->size not 0
-         return data[size -1]; 
+         if (size != 0){
+            return data[size -1] ; 
+         } else{
+            return -1;
+         } 
       }
       bool insert(T item){
          // inserts item into this node if it was not already there 

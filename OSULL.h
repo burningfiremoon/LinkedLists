@@ -80,13 +80,18 @@ public:
       return returnValue;
    ; }
 
-   bool find(T item){ 
+   bool find(T item){ //Done
       // searches for item in the list
       // returns true if found; false otherwise 
       //
       // IMPLEMENT THIS 
       //
-      return false;
+      Node * cursor = front-> next;
+      while(cursor != back && cursor->getMax() < item){
+         cursor = cursor->next;
+      }
+
+      return cursor->find(item);
    ; }
 
    bool remove(T item){

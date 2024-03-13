@@ -41,13 +41,23 @@ public:
       //
       // IMPLEMENT THIS
       //
+
+      if (nodeCount == 0){
+         Node temp = new Node(front, back, nodeCapacity);
+         front->next = temp;
+         back->prev = temp;
+         nodeCount++;
+         return temp->insert(item);
+      }
+
       bool returnValue;
       Node * cursor = front-> next;
+
       while(cursor != back && cursor->getMax() < item){
          cursor = cursor->next;
       }
 
-      if (item < cursor->getMin() && cursor->prev != front){
+      if ((item < cursor->getMin() && cursor->prev != front) || cursor == back){
          cursor = cursor->prev;
       }
 
@@ -134,6 +144,7 @@ public:
          cursor->prev->next = cursor->next;
          // delete cursor
          delete cursor;
+         nodeCount--;
       }
 
 

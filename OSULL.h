@@ -35,6 +35,7 @@ public:
    bool isEmpty(){ return size==0 ;}
    int get_size(){ return size ;}
 
+   // my own method, not needed for class
    void connectionTest(){
       Node * cursor = front;
       while(cursor != back){
@@ -203,11 +204,12 @@ public:
          cursor -> display() ; 
          cursor = cursor-> next ;
       }
-      cout << " >" ;
+      cout << " >" << endl;
    }
 
    void ddisplay(){
-      cout << "size: " << size << "nodeCount: " << nodeCount << endl;
+      cout << "This is ddisplay(): \n";
+      cout << "size: " << size << " nodeCount: " << nodeCount << endl;
       Node * cursor = front-> next ;
       cout << "<" ;
       while( cursor != back ){

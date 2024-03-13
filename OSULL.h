@@ -16,6 +16,7 @@ public:
       nodeCapacity = initNodeCapacity ;
 
       // make the front and back dummy nodes 
+      // Node(prev, next, capacity)
       front = new Node( nullptr, nullptr, nodeCapacity );
       back = new Node( front, nullptr, nodeCapacity );
       front->next = back;
@@ -34,13 +35,49 @@ public:
    bool isEmpty(){ return size==0 ;}
    int get_size(){ return size ;}
 
-   bool insert(T item){
+   bool insert(T item){ //Done
       // inserts item into the list, if it is not there already
       // returns true if inserted; false if it was already there
       //
       // IMPLEMENT THIS
       //
-      return false;
+      bool returnValue;
+      Node * cursor = front-> next;
+      while(cursor != back && cursor->getMax() < item){
+         cursor = cursor->next;
+      }
+
+      if (item < cursor->getMin() && cursor->prev != front){
+         cursor = cursor->prev;
+      }
+
+      returnValue = cursor->insert(item);
+      
+
+      // split node into 2 if full
+      // add the node to the right b/c less movement
+      // if returnValue is true then size increases by 1 and split full node
+      if (returnValue){
+         size++;
+      }
+
+      if (cursor->getSize() == cursor->getCapacity()){
+         // create new node to the right
+         Node temp = new Node(cursor, cursor->next, nodeCapacity);
+         temp->prev->next = temp;
+         temp->next->prev = temp;
+         nodeCount++;
+
+         // move bottom half of cursor to temp
+         for (int i = 0; i < nodeCapacity/2; i++){
+            T movedItem = cursor->getMax();
+            temp->insert(movedItem);
+            cursor->remove(movedItem);
+         }
+
+      }
+
+      return returnValue;
    ; }
 
    bool find(T item){ 
@@ -213,6 +250,12 @@ private:
 	      //
          // IMLEMENT THIS
 	      //
+         // quick max check for transfer removal
+         if (item == data[size-1]){
+            size--;
+            return true;
+         }
+
          int left = 0;
          int right = size -1;
          int index = -1;
@@ -238,7 +281,7 @@ private:
          }
          // move all elements 1 to the left deleting the element in the process
          for (int i = index; i < size-1; i++){
-            data[index] = data[index+1];
+            data[i] = data[i+1];
          }
          size--;
          return true;

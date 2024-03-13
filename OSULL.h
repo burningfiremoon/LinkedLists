@@ -29,11 +29,25 @@ public:
       while( cursor != nullptr ){
          Node * current = cursor ;
          cursor = cursor-> next ;
-         delete  current ;
+         delete  current;
       }
    }
    bool isEmpty(){ return size==0 ;}
    int get_size(){ return size ;}
+
+   void connectionTest(){
+      Node * cursor = front;
+      while(cursor != back){
+         cursor = cursor->next;
+         cout << "tally ";
+      }
+      cout << "front connected to back" <<endl;
+      while(cursor != front){
+         cursor = cursor->prev;
+         cout << "tally ";
+      }
+      cout << "back connected front" << endl;
+   }
 
    bool insert(T item){ //Done
       // inserts item into the list, if it is not there already
@@ -43,10 +57,11 @@ public:
       //
 
       if (nodeCount == 0){
-         Node temp = new Node(front, back, nodeCapacity);
+         Node* temp = new Node(front, back, nodeCapacity);
          front->next = temp;
          back->prev = temp;
          nodeCount++;
+         size++;
          return temp->insert(item);
       }
 
@@ -62,7 +77,6 @@ public:
       }
 
       returnValue = cursor->insert(item);
-      
 
       // split node into 2 if full
       // add the node to the right b/c less movement
@@ -73,7 +87,7 @@ public:
 
       if (cursor->getSize() == cursor->getCapacity()){
          // create new node to the right
-         Node temp = new Node(cursor, cursor->next, nodeCapacity);
+         Node* temp = new Node(cursor, cursor->next, nodeCapacity);
          temp->prev->next = temp;
          temp->next->prev = temp;
          nodeCount++;
@@ -112,11 +126,21 @@ public:
       //
       bool returnValue;
       Node * cursor = front-> next;
-      if (item < cursor->getMin() && cursor->prev != front){
-         cursor = cursor->prev;
+      while(cursor != back && cursor->getMax() < item){
+         cursor = cursor->next;
+      }
+      // corner case removed value is greater than greatest value
+      if (cursor == back){
+         return false;
       }
 
       returnValue = cursor->remove(item);
+
+      if (returnValue){
+         size--;
+      }
+
+      
 
       // remove repeated checks to reduce resused conditions
       if (cursor->getSize() >= nodeCapacity/2 || cursor->prev == front){
@@ -133,7 +157,7 @@ public:
          }
       } else if (cursor->prev->getSize() <= nodeCapacity/2 ){
          // move all cursor to cursor->prev
-         int tempNum = cursor->prev->getSize();
+         int tempNum = cursor->getSize();
          for (int i = 0; i < tempNum; i++){
             T moving = cursor->getMax();
             cursor->prev->insert(moving);
@@ -181,6 +205,19 @@ public:
       }
       cout << " >" ;
    }
+
+   void ddisplay(){
+      cout << "size: " << size << "nodeCount: " << nodeCount << endl;
+      Node * cursor = front-> next ;
+      cout << "<" ;
+      while( cursor != back ){
+         cout << " <";
+         cursor -> display() ; 
+         cursor = cursor-> next ;
+         cout <<" > ";
+      }
+      cout << " >" ;
+   }
       
 private:
 
@@ -222,7 +259,7 @@ private:
       T getMax(){// return the largest item in this node 
          // requires: this->size not 0
          if (size != 0){
-            return data[size -1] ; 
+            return data[size - 1] ; 
          } else{
             return -1;
          } 
@@ -243,7 +280,7 @@ private:
 
          // corner case empty array check
          if (size == 0){
-            data[0] == item;
+            data[0] = item;
             size++;
             return true;
          }
@@ -251,7 +288,7 @@ private:
          int index = size-1; // start from the end index
          // sequential search and insert
          // shift larger data 1 to the right
-         while (item < data[index]){
+         while (item < data[index] && index >= 0){
             data[index + 1] = data[index];
             index--;
          }
@@ -344,7 +381,7 @@ private:
 	      // 
          // IMPLEMENT THIS
 	      //
-         for (int i = 0; i<size; i++){
+         for (int i = 0; i < size; i++){
             cout << " " << data[i] << ",";
          }
       ;}

@@ -136,14 +136,51 @@ private:
             return -1;
          } 
       }
-      bool insert(T item){
+
+      bool insert(T item){ //semi finished
+
+         // missing case if array is full!!
+         // might not be needed if arrays are never fully full
+
+
          // inserts item into this node if it was not already there 
          // returns true if the item was inserted, false otherwise 
 	      //
          // IMPLEMENT THIS 
 	      //
-         // while ()
-         return true;
+         // size check is done in the outside insert
+
+         // corner case empty array check
+         if (size == 0){
+            data[0] == item;
+            size++;
+            return true;
+         }
+
+         int index = size-1; // start from the end index
+         // sequential search and insert
+         // shift larger data 1 to the right
+         while (item < data[index]){
+            data[index + 1] = data[index];
+            index--;
+         }
+         // current value is > or = to item
+
+         // if equal
+         if (item == data[index]){
+            index++;
+            while(index < size){
+               data[index] = data[index + 1];
+               index++;
+            }
+            return false;
+         } else{ // if item is greater than data[index]
+            // insert 1 to the right of index
+            data[index + 1] = item;
+            size++;
+            return true;
+         }
+         return false;
       ;}
       bool find(T item){ //Done
          // searches for item in this node 
@@ -169,13 +206,41 @@ private:
          // number not present
          return false;
       ;}
-      bool remove(T item){
+      bool remove(T item){ //Done
          // remove item from this node
          // returns true if the item was removed, false otherwise 
-	 //
+	      //
          // IMLEMENT THIS
-	 //
-      return false;
+	      //
+         int left = 0;
+         int right = size -1;
+         int index = -1;
+
+         // binary search to find location
+         while(left <= right){
+            int middle = (right - left)/2 + left;
+
+            if (data[middle] == item){
+               index = middle;
+               break;
+            }
+
+            if (data[middle] < item){
+               left = middle + 1;
+            } else{
+               right = middle -1;
+            }
+         }
+         // if doesn't exist exit return false (not removed);
+         if (index == -1){
+            return false;
+         }
+         // move all elements 1 to the left deleting the element in the process
+         for (int i = index; i < size-1; i++){
+            data[index] = data[index+1];
+         }
+         size--;
+         return true;
       ;}
       void display(){ // Done
          // print the contents of this list 

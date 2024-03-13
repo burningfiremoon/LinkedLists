@@ -94,13 +94,50 @@ public:
       return cursor->find(item);
    ; }
 
-   bool remove(T item){
+   bool remove(T item){ // Done
       // removes item from the list 
       // returns false if the item was not there; true if it was
       //
       // IMPLEMENT THIS
       //
-      return true;
+      bool returnValue;
+      Node * cursor = front-> next;
+      if (item < cursor->getMin() && cursor->prev != front){
+         cursor = cursor->prev;
+      }
+
+      returnValue = cursor->remove(item);
+
+      // remove repeated checks to reduce resused conditions
+      if (cursor->getSize() >= nodeCapacity/2 || cursor->prev == front){
+         return returnValue;
+      }
+
+      if (cursor->prev->getSize() > nodeCapacity/2){
+         int temp = cursor->prev->getSize();
+         for (int i = 0; i < ((temp - nodeCapacity/2)/2); i++){
+            // move cursor->prev to cursor
+            T moving = cursor->prev->getMax();
+            cursor->insert(moving);
+            cursor->prev->remove(moving);
+         }
+      } else if (cursor->prev->getSize() <= nodeCapacity/2 ){
+         // move all cursor to cursor->prev
+         int tempNum = cursor->prev->getSize();
+         for (int i = 0; i < tempNum; i++){
+            T moving = cursor->getMax();
+            cursor->prev->insert(moving);
+            cursor->remove(moving);
+         }
+         // connect cursor->prev to cursor->next and vice versa
+         cursor->next->prev = cursor->prev;
+         cursor->prev->next = cursor->next;
+         // delete cursor
+         delete cursor;
+      }
+
+
+      return returnValue;
    ; }
 
    T getMin(){ //Done

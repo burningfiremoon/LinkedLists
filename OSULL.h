@@ -68,6 +68,7 @@ public:
       // IMPLEMENT THIS 
       //
       return front->next->getMin();
+      
     ; } 
 
    T getMax(){ // Done
@@ -247,15 +248,9 @@ private:
 	      // 
          // IMPLEMENT THIS
 	      //
-	      //
-         cout << "< ";
          for (int i = 0; i<size; i++){
-            cout << data[i];
-            if (i != size-1){
-               cout << ", ";
-            }
+            cout << " " << data[i] << ",";
          }
-         cout << " >";
       ;}
    };
 

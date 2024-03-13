@@ -1,4 +1,4 @@
-#include "OSLL.h"
+#include "OSULL.h"
 
 #include <stdlib.h>
 #include <iostream>
@@ -11,21 +11,15 @@ int main( )
 {
     const int N = 10;
     // int * a = new int[10];
-    OSLL<int> lst;
-
-    lst.display();
-    cout << "\n" ;
-    cout << " max: " << lst.getMax(); 
-    cout << "\n" ;
-    cout << " min: " << lst.getMin(); 
-    cout << "\n" ;
+    OSULL<int> lst;
     
-    for( int i = 0 ; i < N ; i++ )
+    for( int i = 0 ; i < 15 ; i++ )
     {
-        lst.insert( 21-i );
+        lst.insert(i);
         // a[ i ] = j ;
     }
-    lst.display();
+    lst.ddisplay();
+
     cout << "\n" ;
 
     cout << "finding 4: " <<  ((lst.find(4)) ? "yes": "no") << "\n" ;
@@ -34,19 +28,22 @@ int main( )
     cout << "removing 4 and 14\n";
     lst.remove(4);
     lst.remove(14);
-    lst.display();
+    lst.ddisplay();
     cout << "\n" ;
 
     cout << "inserting 5 and 15\n";
     lst.insert(5);
     lst.insert(15);
-    lst.display();
+    lst.ddisplay();
     cout << "\n" ;
     
+    cout << "connection test\n";
+    lst.connectionTest();
+
     cout << "removing 8 and 18\n";
     lst.remove(8);
     lst.remove(18);
-    lst.display();
+    lst.ddisplay();
     cout << "\n" ;
 
     cout << "inserting 2 and 25\n";
@@ -73,7 +70,7 @@ int main( )
     cout << "\n" ;
 
     cout << "making and deleting the list\n" ; 
-    OSLL<int> * lst2 = new OSLL<int> ;
+    OSULL<int> * lst2 = new OSULL<int> ;
     lst2->insert(2);
     lst2->insert(25);
     lst2->display();
@@ -81,7 +78,7 @@ int main( )
     cout << "\n" ;
 
     cout << "making a character list\n" ; 
-    OSLL<char> * lst3 = new OSLL<char> ;
+    OSULL<char> * lst3 = new OSULL<char> ;
     lst3->insert('c');
     lst3->insert('a');
     lst3->insert('d');

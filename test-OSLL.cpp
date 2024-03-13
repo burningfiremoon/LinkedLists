@@ -20,6 +20,7 @@ int main( )
     cout << "Is the Linked List empty: " << ((lst.isEmpty()) ? "yes": "no") << "\n";
 
     cout << "this is the size: " << lst.get_size() << endl;
+    cout << "adding 15 items\n";
     for( int i = 0 ; i < 15 ; i++)
     {
         lst.insert(21-i);
